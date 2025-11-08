@@ -224,8 +224,8 @@ async def show_animals(message: types.Message):
 # ==================== XARID QILISH ====================
 @dp.callback_query(lambda c: c.data and c.data.startswith("buy_"))
 async def process_buy(callback: types.CallbackQuery):
-    if not callback.
-        return
+    if not callback.message:
+    return
     animal_key = callback.data.split("_")[1]
     animal = animals_config[animal_key]
     user_id = callback.from_user.id
@@ -288,7 +288,18 @@ async def process_top_up_amount(message: types.Message, state: FSMContext):
         if amount < 500:
             await message.answer("❗ Minimal to'lov summasi: 500 ₽.\n\nIltimos, qaytadan kiriting:")
             return
-        link = f"https://payeer.com/ru/account/send/?to={PAYEER_ACCOUNT}&sum={amount}&currency=UZS"
+        # Foydalanuvchi ID asosida 1-3 orasida qo'shimcha
+extra = (message.from_user.id % 3) + 1  # 1, 2 yoki 3
+final_amount = amount + extra
+
+link = f"https://payeer.com/ru/account/send/?to={PAYEER_ACCOUNT}&sum={amount}&currency=RUB"
+await message.answer(
+    f"✅ To'lov uchun quyidagi havolaga o'ting:\n\n{link}\n\n"
+    f"🔹 Siz {amount} ₽ to'lashni rejalashtirdingiz, lekin aniqlik uchun {extra} ₽ qo'shildi.\n"
+    f"🔹 Jami to'lov: {final_amount} ₽\n\n"
+    f"🧾 To'lovni amalga oshirgandan so'ng, admin hisobingizni qo'lda to'ldiradi.\n"
+    f"🆔 Foydalanuvchi ID: {message.from_user.id}"
+)
         await message.answer(
             f"✅ To'lov uchun quyidagi havolaga o'ting:\n\n{link}\n\n"
             f"🔹 To'lovni amalga oshirgandan so'ng, admin hisobingizni qo'lda to'ldiradi.\n"
