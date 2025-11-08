@@ -576,3 +576,22 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+# main.py oxirida
+async def main():
+    await init_db()
+    # ... scheduler ...
+    
+    # Webhook sozlamalari
+    WEBHOOK_PATH = f"/webhook/{BOT_TOKEN}"
+    WEBHOOK_URL = f"https://bestfarm.onrender.com{WEBHOOK_PATH}"
+
+    await bot.set_webhook(url=WEBHOOK_URL)
+    await dp.start_polling(bot)  # ❌ bu polling — o'rniga webhook ishlating
+
+# 👇 To'g'ri webhook usuli:
+    await dp.start_webhook(
+        bot=bot,
+        webhook_path=WEBHOOK_PATH,
+        host="0.0.0.0",
+        port=10000,  # Render default port
+    )
