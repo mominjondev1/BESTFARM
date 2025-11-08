@@ -15,9 +15,7 @@ from apscheduler.triggers.cron import CronTrigger
 import pytz
 
 # ==================== SOZLAMALAR (ENVIRONMENT VARIABLES) ====================
-BOT_TOKEN = os.getenv("8268173697:AAHS82mSPPCPgM-3h-8ofzJIah2gkL9fooM")
-if not BOT_TOKEN:
-    raise ValueError("BOT_TOKEN environment variable is required")
+BOT_TOKEN = "8268173697:AAHS82mSPPCPgM-3h-8ofzJIah2gkL9fooM"
 
 ADMIN_ID_STR = os.getenv("ADMIN_ID")
 if not ADMIN_ID_STR:
