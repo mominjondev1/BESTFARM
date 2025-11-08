@@ -224,7 +224,7 @@ async def show_animals(message: types.Message):
 # ==================== XARID QILISH ====================
 @dp.callback_query(lambda c: c.data and c.data.startswith("buy_"))
 async def process_buy(callback: types.CallbackQuery):
-   if not callback.message:
+    if not callback.message:
         return
     animal_key = callback.data.split("_")[1]
     animal = animals_config[animal_key]
